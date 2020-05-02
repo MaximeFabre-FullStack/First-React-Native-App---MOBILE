@@ -27,17 +27,15 @@ class App extends Component {
       humidite: '',
       vent: '',
       ville: '',
+      icon: '',
     };
   }
 
   componentDidMount() {
-    console.log('coucou');
     fetch(
       'http://api.openweathermap.org/data/2.5/weather?q=London,GB&appid=4a43bb5dfdea66ce80a9c846b9fc5423&units=metric',
     )
       .then(response => {
-        console.log('coucou2');
-        console.log(response);
         return response.json();
       })
       .then(
@@ -47,6 +45,14 @@ class App extends Component {
           this.setState({humidité: data.main.humidity});
           this.setState({ville: data.name});
           this.setState({vent: data.wind.speed});
+          let weatherIcon = data.weather;
+          this.setState({
+            icon:
+              'http://openweathermap.org/img/wn/' +
+              weatherIcon[0].icon +
+              '@2x.png',
+          });
+          console.log(this.state.icon);
         },
         error => {
           console.log(error);
@@ -91,20 +97,17 @@ class App extends Component {
             <Text style={styles.meteoText}> La meteo d'aujourd'hui: </Text>
           </View>
           <View style={styles.tempsContainer}>
-            <Text style={styles.tempText}>{this.state.temperature}</Text>
+            <Text style={styles.tempText}>{this.state.temperature}˚</Text>
           </View>
           <View style={styles.cityContainer}>
-            <Text style={styles.cityText}>{this.state.nom}</Text>
+            <Text style={styles.cityText}>{this.state.ville}</Text>
           </View>
           <View style={styles.situationContainer}>
             <Text style={styles.situationText}>
               {' '}
               Vent: {this.state.vent} km/h{' '}
             </Text>
-            <Image
-              style={styles.tinyLogo}
-              source={require('./img/nuagelogo.png')}
-            />
+            <Image style={styles.tinyLogo} source={{uri: this.state.icon}} />
           </View>
           <TouchableOpacity style={styles.button} onPress={this.getWeather}>
             <Text>Rafraichir</Text>

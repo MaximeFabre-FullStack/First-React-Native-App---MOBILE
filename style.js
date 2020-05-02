@@ -16,12 +16,14 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     backgroundColor: 'black',
   },
+
   image: {
     flex: 1,
     resizeMode: 'cover',
     justifyContent: 'center',
     opacity: 0.9,
   },
+
   cityContainer: {},
   cityText: {
     color: 'white',
@@ -30,14 +32,16 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginTop: -530,
   },
+
   tempContainer: {},
   tempText: {
     color: 'white',
     fontSize: 44,
     textAlign: 'center',
     fontWeight: 'bold',
-    marginTop: -640,
+    marginTop: -440,
   },
+
   situationContainer: {},
   situationText: {
     color: 'white',
@@ -46,6 +50,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginTop: -360,
   },
+
   tinyLogo: {
     width: 150,
     height: 150,
@@ -54,6 +59,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     opacity: 0.5,
   },
+
   button: {
     alignItems: 'center',
     backgroundColor: '#DDDDDD',
