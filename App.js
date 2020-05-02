@@ -8,14 +8,14 @@
 
 import React, {Component} from 'react';
 import {
-  StyleSheet,
   Text,
   View,
   Image,
   ImageBackground,
   TouchableOpacity,
   SafeAreaView,
-  StatusBar,
+  ScrollView,
+  TextInput,
 } from 'react-native';
 import styles from './style';
 
@@ -33,7 +33,7 @@ class App extends Component {
 
   componentDidMount() {
     fetch(
-      'http://api.openweathermap.org/data/2.5/weather?q=London,GB&appid=4a43bb5dfdea66ce80a9c846b9fc5423&units=metric',
+      'http://api.openweathermap.org/data/2.5/weather?q=Nice,FR&appid=4a43bb5dfdea66ce80a9c846b9fc5423&units=metric',
     )
       .then(response => {
         return response.json();
@@ -43,7 +43,6 @@ class App extends Component {
           console.log(data);
           this.setState({temperature: data.main.temp});
           this.setState({humidité: data.main.humidity});
-          this.setState({ville: data.name});
           this.setState({vent: data.wind.speed});
           let weatherIcon = data.weather;
           this.setState({
@@ -59,26 +58,36 @@ class App extends Component {
         },
       );
   }
-  getWeather = () => {
-    fetch(
-      'http://api.openweathermap.org/data/2.5/weather?q=London,GB&appid=4a43bb5dfdea66ce80a9c846b9fc5423&units=metric',
-    )
-      .then(response => {
-        console.log(response);
-        return response.json();
-      })
-      .then(
-        data => {
-          console.log(data);
+
+  changeValue = () => {
+    this.setState({ville: TextInput.value});
+    let villeSelector = this.state.ville;
+
+    getWeather = () => {
+      fetch(
+        'http://api.openweathermap.org/data/2.5/weather?q=' +
+          villeSelector +
+          '&appid=4a43bb5dfdea66ce80a9c846b9fc5423&units=metric',
+      )
+        .then(response => {
+          return response.json();
+        })
+        .then(data => {
           this.setState({temperature: data.main.temp});
           this.setState({humidité: data.main.humidity});
-          this.setState({ville: data.name});
           this.setState({vent: data.wind.speed});
-        },
-        error => {
-          console.log(error);
-        },
-      );
+          let weatherIcon = data.weather;
+          this.setState({
+            icon:
+              'http://openweathermap.org/img/wn/' +
+              weatherIcon[0].icon +
+              '@2x.png',
+          });
+          error => {
+            console.log(error);
+          };
+        });
+    };
   };
 
   // forceDuVent = () => {
@@ -91,27 +100,32 @@ class App extends Component {
   render() {
     return (
       <SafeAreaView style={styles.safeAreaViewStyle}>
-        <StatusBar />
-        <ImageBackground source={require('./img/ny.jpg')} style={styles.image}>
-          <View style={styles.appContainer}>
-            <Text style={styles.meteoText}> La meteo d'aujourd'hui: </Text>
-          </View>
-          <View style={styles.tempsContainer}>
-            <Text style={styles.tempText}>{this.state.temperature}˚</Text>
-          </View>
-          <View style={styles.cityContainer}>
-            <Text style={styles.cityText}>{this.state.ville}</Text>
-          </View>
-          <View style={styles.situationContainer}>
-            <Text style={styles.situationText}>
-              {' '}
-              Vent: {this.state.vent} km/h{' '}
-            </Text>
+        <ImageBackground source={require('./img/wp.jpeg')} style={styles.image}>
+          <ScrollView>
+            <View style={styles.appContainer}>
+              <Text style={styles.meteoText}> Today's weather: </Text>
+            </View>
             <Image style={styles.tinyLogo} source={{uri: this.state.icon}} />
-          </View>
-          <TouchableOpacity style={styles.button} onPress={this.getWeather}>
-            <Text>Rafraichir</Text>
-          </TouchableOpacity>
+            <View style={styles.cityContainer}>
+              <TextInput
+                style={styles.cityText}
+                placeholder="Search for a city here">
+                {this.state.ville}
+              </TextInput>
+            </View>
+            <View style={styles.tempsContainer}>
+              <Text style={styles.tempText}>{this.state.temperature} C˚</Text>
+            </View>
+            <View style={styles.situationContainer}>
+              <Text style={styles.situationText}>
+                {' '}
+                Wind: {this.state.vent} km/h{' '}
+              </Text>
+            </View>
+            <TouchableOpacity style={styles.button} onPress={this.changeValue}>
+              <Text>Refresh</Text>
+            </TouchableOpacity>
+          </ScrollView>
         </ImageBackground>
       </SafeAreaView>
     );

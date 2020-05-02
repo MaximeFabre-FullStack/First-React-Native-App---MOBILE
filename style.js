@@ -9,46 +9,22 @@ const styles = StyleSheet.create({
   appContainer: {
     flex: 1,
   },
+
+  image: {
+    flex: 1,
+    resizeMode: 'cover',
+    justifyContent: 'center',
+    opacity: 0.8,
+    backgroundColor: 'black',
+  },
+
   meteoText: {
     color: 'white',
     fontSize: 34,
     textAlign: 'center',
     fontWeight: 'bold',
     backgroundColor: 'black',
-  },
-
-  image: {
-    flex: 1,
-    resizeMode: 'cover',
-    justifyContent: 'center',
-    opacity: 0.9,
-  },
-
-  cityContainer: {},
-  cityText: {
-    color: 'white',
-    fontSize: 44,
-    textAlign: 'center',
-    fontWeight: 'bold',
-    marginTop: -530,
-  },
-
-  tempContainer: {},
-  tempText: {
-    color: 'white',
-    fontSize: 44,
-    textAlign: 'center',
-    fontWeight: 'bold',
-    marginTop: -440,
-  },
-
-  situationContainer: {},
-  situationText: {
-    color: 'white',
-    fontSize: 44,
-    textAlign: 'center',
-    fontWeight: 'bold',
-    marginTop: -360,
+    opacity: 0.5,
   },
 
   tinyLogo: {
@@ -56,8 +32,34 @@ const styles = StyleSheet.create({
     height: 150,
     marginLeft: 'auto',
     marginRight: 'auto',
+  },
+
+  cityText: {
+    marginLeft: 15,
+    marginRight: 15,
+    height: 40,
+    borderColor: 'grey',
+    borderWidth: 1,
     backgroundColor: 'white',
-    opacity: 0.5,
+    borderRadius: 5,
+  },
+
+  tempText: {
+    color: 'white',
+    fontSize: 44,
+    textAlign: 'center',
+    fontWeight: 'bold',
+  },
+
+  situationContainer: {
+    marginTop: 50,
+  },
+
+  situationText: {
+    color: 'white',
+    fontSize: 44,
+    textAlign: 'center',
+    fontWeight: 'bold',
   },
 
   button: {
@@ -65,9 +67,10 @@ const styles = StyleSheet.create({
     backgroundColor: '#DDDDDD',
     padding: 10,
     width: 300,
+    marginTop: 50,
     marginLeft: 'auto',
     marginRight: 'auto',
-    marginBottom: 20,
+    borderRadius: 6,
   },
 });
 
