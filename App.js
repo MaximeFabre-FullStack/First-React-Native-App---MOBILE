@@ -28,12 +28,13 @@ class App extends Component {
       vent: '',
       ville: '',
       icon: '',
+      villeaAfficher: '',
     };
   }
 
   componentDidMount() {
     fetch(
-      'http://api.openweathermap.org/data/2.5/weather?q=Nice,FR&appid=4a43bb5dfdea66ce80a9c846b9fc5423&units=metric',
+      'http://api.openweathermap.org/data/2.5/weather?q=London,GB&appid=4a43bb5dfdea66ce80a9c846b9fc5423&units=metric',
     )
       .then(response => {
         return response.json();
@@ -44,6 +45,7 @@ class App extends Component {
           this.setState({temperature: data.main.temp});
           this.setState({humidité: data.main.humidity});
           this.setState({vent: data.wind.speed});
+          this.setState({villeaAfficher: data.name});
           let weatherIcon = data.weather;
           this.setState({
             icon:
@@ -59,35 +61,35 @@ class App extends Component {
       );
   }
 
-  changeValue = () => {
-    this.setState({ville: TextInput.value});
-    let villeSelector = this.state.ville;
+  changeValue = text => {
+    this.setState({ville: text});
+  };
 
-    getWeather = () => {
-      fetch(
-        'http://api.openweathermap.org/data/2.5/weather?q=' +
-          villeSelector +
-          '&appid=4a43bb5dfdea66ce80a9c846b9fc5423&units=metric',
-      )
-        .then(response => {
-          return response.json();
-        })
-        .then(data => {
-          this.setState({temperature: data.main.temp});
-          this.setState({humidité: data.main.humidity});
-          this.setState({vent: data.wind.speed});
-          let weatherIcon = data.weather;
-          this.setState({
-            icon:
-              'http://openweathermap.org/img/wn/' +
-              weatherIcon[0].icon +
-              '@2x.png',
-          });
-          error => {
-            console.log(error);
-          };
+  getWeather = () => {
+    let thisStateVille = this.state.ville;
+    fetch(
+      'http://api.openweathermap.org/data/2.5/weather?q=' +
+        thisStateVille +
+        '&appid=4a43bb5dfdea66ce80a9c846b9fc5423&units=metric',
+    )
+      .then(response => {
+        return response.json();
+      })
+      .then(data => {
+        this.setState({temperature: data.main.temp});
+        this.setState({humidité: data.main.humidity});
+        this.setState({vent: data.wind.speed});
+        let weatherIcon = data.weather;
+        this.setState({
+          icon:
+            'http://openweathermap.org/img/wn/' +
+            weatherIcon[0].icon +
+            '@2x.png',
         });
-    };
+        error => {
+          console.log(error);
+        };
+      });
   };
 
   // forceDuVent = () => {
@@ -109,9 +111,15 @@ class App extends Component {
             <View style={styles.cityContainer}>
               <TextInput
                 style={styles.cityText}
-                placeholder="Search for a city here">
-                {this.state.ville}
-              </TextInput>
+                placeholder="Search for a city here"
+                value={this.state}
+                onChangeText={this.changeValue}
+                defaultValue={''}
+                editable
+              />
+            </View>
+            <View>
+              <Text style={styles.tempText}>{this.state.villeaAfficher}</Text>
             </View>
             <View style={styles.tempsContainer}>
               <Text style={styles.tempText}>{this.state.temperature} C˚</Text>
@@ -122,7 +130,7 @@ class App extends Component {
                 Wind: {this.state.vent} km/h{' '}
               </Text>
             </View>
-            <TouchableOpacity style={styles.button} onPress={this.changeValue}>
+            <TouchableOpacity style={styles.button} onPress={this.getWeather}>
               <Text>Refresh</Text>
             </TouchableOpacity>
           </ScrollView>
