@@ -79,6 +79,7 @@ class App extends Component {
         this.setState({temperature: data.main.temp});
         this.setState({humidité: data.main.humidity});
         this.setState({vent: data.wind.speed});
+        this.setState({villeaAfficher: data.name});
         let weatherIcon = data.weather;
         this.setState({
           icon:
