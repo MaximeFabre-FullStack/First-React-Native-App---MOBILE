@@ -3,7 +3,6 @@ import {StyleSheet} from 'react-native';
 const styles = StyleSheet.create({
   safeAreaViewStyle: {
     flex: 1,
-    paddingTop: 8,
     color: 'black',
   },
   appContainer: {

@@ -1,10 +1,13 @@
 import React, {Component} from 'react';
 import {Text, View} from 'react-native';
 import SignOutStyle from './SignOutStyle';
+import {enableScreens} from 'react-native-screens';
+
+enableScreens();
 
 class SignOut extends Component {
   static navigationOptions = {
-    drawerLabel: 'SignOut',
+    drawerLabel: 'Sign - out',
   };
 
   componentDidMount() {
