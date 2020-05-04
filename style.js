@@ -51,9 +51,14 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
 
-  situationContainer: {
-    marginTop: 50,
+  tempTextMinMax: {
+    color: 'white',
+    fontSize: 30,
+    textAlign: 'center',
+    fontWeight: 'bold',
   },
+
+  situationContainer: {},
 
   situationText: {
     color: 'white',
