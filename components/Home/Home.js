@@ -18,11 +18,19 @@ import {
   TextInput,
 } from 'react-native';
 import styles from './style';
+import {enableScreens} from 'react-native-screens';
+import {DrawerActions} from 'react-navigation-drawer';
+
+enableScreens();
 
 // Geolocation.setRNConfiguration(config);
 // navigator.geolocation = require('@react-native-community/geolocation');
 
 class App extends Component {
+  static navigationOptions = {
+    drawerLabel: 'Home',
+  };
+
   constructor(props) {
     super(props);
     this.state = {
@@ -51,8 +59,6 @@ class App extends Component {
       })
       .then(
         data => {
-          console.log(data);
-
           this.setState({situation: data.weather[0].main});
           this.setState({temperature: data.main.temp});
           this.setState({temperatureMin: data.main.temp_min});
@@ -67,7 +73,6 @@ class App extends Component {
               weatherIcon[0].icon +
               '@2x.png',
           });
-          console.log(this.state.icon);
         },
         error => {
           console.log(error);
@@ -121,7 +126,7 @@ class App extends Component {
     return (
       <SafeAreaView style={styles.safeAreaViewStyle}>
         <ImageBackground
-          source={require('../../../img//wp.jpeg')}
+          source={require('../../img//wp.jpeg')}
           style={styles.image}>
           <ScrollView>
             <View style={styles.appContainer}>
@@ -170,6 +175,13 @@ class App extends Component {
             </View>
             <TouchableOpacity style={styles.button} onPress={this.getWeather}>
               <Text>Refresh</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.button}
+              onPress={() =>
+                this.props.navigation.dispatch(DrawerActions.openDrawer())
+              }>
+              <Text>Drawer</Text>
             </TouchableOpacity>
           </ScrollView>
         </ImageBackground>
